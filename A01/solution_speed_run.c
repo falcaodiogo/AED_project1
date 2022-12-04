@@ -373,7 +373,7 @@ int main(int argc, char *argv[argc + 1])
   solution_2_elapsed_time = 0.0;
   solution_3_elapsed_time = 0.0;
   printf("    + --- ---------------- --------- +     + --- ---------------- --------- +     + --- ---------------- --------- +     + --- ---------------- --------- +\n");
-  printf("    |                plain recursion |     |                plain recursion |     |                plain iterative |     |              dynamic iterative |\n");
+  printf("    |               Branch and Bound |     |                plain recursion |     |                plain iterative |     |              dynamic iterative |\n");
   printf("--- + --- ---------------- --------- + --- + --- ---------------- --------- + --- + --- ---------------- --------- + --- + --- ---------------- --------- +\n");
   printf("  n | sol            count  cpu time |   n | sol            count  cpu time |   n | sol            count  cpu time |   n | sol            count  cpu time |\n");
   printf("--- + --- ---------------- --------- + --- + --- ---------------- --------- + --- + --- ---------------- --------- + --- + --- ---------------- --------- +\n");
