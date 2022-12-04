@@ -68,7 +68,8 @@ typedef struct
 static solution_t solution_1, solution_1_best;
 static double solution_1_elapsed_time; // time it took to solve the problem
 static unsigned long solution_1_count; // effort dispended solving the problem
-static int visited[_max_road_size_][_max_road_size_][_max_road_speed_];
+// static int visited[_max_road_size_][_max_road_size_][_max_road_speed_]; 3 dimension array to store the visited positions and to use and backtracking approach to solve the problem
+// But this approach wasn't good because it took more time then the branch and bound approach
 
 static void solution_1_recursion(int move_number, int position, int speed, int final_position)
 // position -> posição no momento
@@ -98,7 +99,7 @@ static void solution_1_recursion(int move_number, int position, int speed, int f
   // if (visited[move_number][position][speed] == 1)
   //   return;
 
-  visited[move_number][position][speed] = 1;
+  // visited[move_number][position][speed] = 1;
 
   // no, try all legal speed
   for (new_speed = speed + 1; new_speed >= speed - 1; new_speed--)
@@ -177,7 +178,6 @@ static void solution_2_recursion(int move_number, int position, int speed, int f
     {
       for (i = 0; i <= new_speed && new_speed <= max_road_speed[position + i]; i++)
         ;
-
       if (i > new_speed)
       {
         solution_2_recursion(move_number + 1, position + new_speed, new_speed, final_position);
@@ -208,7 +208,7 @@ static void solution_3_iterative(int move_number, int position, int speed, int f
 {
   int i, new_speed,j;
   int new_pos;
-  while (position < final_position) // enquanto não for posição final
+  while (position < final_position) 
   {
     for (new_speed = speed + 1; new_speed >= 1; new_speed--)
     {
@@ -261,19 +261,20 @@ static int last_move_number = 0;
 static int last_position = 0;
 static int last_speed = 0;
 
+// Dynamic programming solution using a iterative solution, meaning that it uses the result of the best solution found and it calculates were does it need to start reducing its speed
 static void solution_4_iterative(int move_number, int position, int speed, int final_position)
 {
   int i, new_speed,j;
   int new_pos;
   int reducing = 0;
-  while (position < final_position) // enquanto não for posição final
+  while (position < final_position)
   {
     for (new_speed = speed + 1; new_speed >= 1; new_speed--)
     {
-      int break_distance = new_speed * (new_speed + 1) / 2;
+      int break_distance = new_speed * (new_speed + 1) / 2; // Calculates the distance that the car will travel until it needs to break
       
-      if (position + break_distance > final_position) {
-        if (reducing == 0) {
+      if (position + break_distance > final_position) { // If the car is going to break after the final position, it will not be a valid solution
+        if (reducing == 0) { 
           last_move_number = move_number;
           last_speed = speed;
           last_position = position;
@@ -371,11 +372,11 @@ int main(int argc, char *argv[argc + 1])
   solution_1_elapsed_time = 0.0;
   solution_2_elapsed_time = 0.0;
   solution_3_elapsed_time = 0.0;
-  printf("    + --- ---------------- --------- +\n");
-  printf("    |                plain recursion |\n");
-  printf("--- + --- ---------------- --------- +\n");
-  printf("  n | sol            count  cpu time |\n");
-  printf("--- + --- ---------------- --------- +\n");
+  printf("    + --- ---------------- --------- +     + --- ---------------- --------- +     + --- ---------------- --------- +     + --- ---------------- --------- +\n");
+  printf("    |                plain recursion |     |                plain recursion |     |                plain iterative |     |              dynamic iterative |\n");
+  printf("--- + --- ---------------- --------- + --- + --- ---------------- --------- + --- + --- ---------------- --------- + --- + --- ---------------- --------- +\n");
+  printf("  n | sol            count  cpu time |   n | sol            count  cpu time |   n | sol            count  cpu time |   n | sol            count  cpu time |\n");
+  printf("--- + --- ---------------- --------- + --- + --- ---------------- --------- + --- + --- ---------------- --------- + --- + --- ---------------- --------- +\n");
   while (final_position <= _max_road_size_ /* && final_position <= 20*/)
   {
     print_this_one = (final_position == 10 || final_position == 20 || final_position == 50 || final_position == 100 || final_position == 200 || final_position == 400 || final_position == 800) ? 1 : 0;
@@ -389,7 +390,7 @@ int main(int argc, char *argv[argc + 1])
         sprintf(file_name, "%03d_1.pdf", final_position);
         make_custom_pdf_file(file_name, final_position, &max_road_speed[0], solution_1_best.n_moves, &solution_1_best.positions[0], solution_1_elapsed_time, solution_1_count, "Plain recursion");
       }
-      printf(" %3d %16lu %9.3e |", solution_1_best.n_moves, solution_1_count, solution_1_elapsed_time);
+      printf(" %3d %16lu %9.3e | ", solution_1_best.n_moves, solution_1_count, solution_1_elapsed_time);
     }
     else
     {
@@ -397,6 +398,8 @@ int main(int argc, char *argv[argc + 1])
       printf("                                |");
     }
     // second solution method (return first solution)
+    print_this_one = (final_position == 10 || final_position == 20 || final_position == 50 || final_position == 100 || final_position == 200 || final_position == 400 || final_position == 800) ? 1 : 0;
+    printf("%3d |", final_position);
     if (solution_2_elapsed_time < _time_limit_)
     {
       solve_2(final_position);
@@ -405,7 +408,7 @@ int main(int argc, char *argv[argc + 1])
         sprintf(file_name, "%03d_2.pdf", final_position);
         make_custom_pdf_file(file_name, final_position, &max_road_speed[0], solution_2_best.n_moves, &solution_2_best.positions[0], solution_2_elapsed_time, solution_2_count, "Plain recursion");
       }
-      printf(" %3d %16lu %9.3e |", solution_2_best.n_moves, solution_2_count, solution_2_elapsed_time);
+      printf(" %3d %16lu %9.3e | ", solution_2_best.n_moves, solution_2_count, solution_2_elapsed_time);
     }
     else
     {
@@ -413,6 +416,8 @@ int main(int argc, char *argv[argc + 1])
       printf("                                |");
     }
     // third solution method (iterative with break distance)
+    print_this_one = (final_position == 10 || final_position == 20 || final_position == 50 || final_position == 100 || final_position == 200 || final_position == 400 || final_position == 800) ? 1 : 0;
+    printf("%3d |", final_position);
     if (solution_3_elapsed_time < _time_limit_)
     {
       solve_3(final_position);
@@ -421,7 +426,7 @@ int main(int argc, char *argv[argc + 1])
         sprintf(file_name, "%03d_3.pdf", final_position);
         make_custom_pdf_file(file_name, final_position, &max_road_speed[0], solution_3_best.n_moves, &solution_3_best.positions[0], solution_3_elapsed_time, solution_3_count, "Plain recursion");
       }
-      printf(" %3d %16lu %9.3e |", solution_3_best.n_moves, solution_3_count, solution_3_elapsed_time);
+      printf(" %3d %16lu %9.3e | ", solution_3_best.n_moves, solution_3_count, solution_3_elapsed_time);
     }
     else
     {
@@ -429,6 +434,8 @@ int main(int argc, char *argv[argc + 1])
       printf("                                |");
     }
     // fourth solution method (iterative with break distance)
+    print_this_one = (final_position == 10 || final_position == 20 || final_position == 50 || final_position == 100 || final_position == 200 || final_position == 400 || final_position == 800) ? 1 : 0;
+    printf("%3d |", final_position);
     if (solution_4_elapsed_time < _time_limit_)
     {
       solve_4(final_position);
@@ -437,7 +444,7 @@ int main(int argc, char *argv[argc + 1])
         sprintf(file_name, "%03d_4.pdf", final_position);
         make_custom_pdf_file(file_name, final_position, &max_road_speed[0], solution_4_best.n_moves, &solution_4_best.positions[0], solution_4_elapsed_time, solution_4_count, "Plain recursion");
       }
-      printf(" %3d %16lu %9.3e |", solution_4_best.n_moves, solution_4_count, solution_4_elapsed_time);
+      printf(" %3d %16lu %9.3e | ", solution_4_best.n_moves, solution_4_count, solution_4_elapsed_time);
     }
     else
     {
@@ -458,7 +465,7 @@ int main(int argc, char *argv[argc + 1])
     else
       final_position += 20;
   }
-  printf("--- + --- ---------------- --------- +\n");
+  printf("--- + --- ---------------- --------- + --- + --- ---------------- --------- + --- + --- ---------------- --------- + --- + --- ---------------- --------- +\n");
   return 0;
 #undef _time_limit_
 }
