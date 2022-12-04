@@ -68,6 +68,7 @@ typedef struct
 static solution_t solution_1, solution_1_best;
 static double solution_1_elapsed_time; // time it took to solve the problem
 static unsigned long solution_1_count; // effort dispended solving the problem
+static int visited[_max_road_size_][_max_road_size_][_max_road_speed_];
 
 static void solution_1_recursion(int move_number, int position, int speed, int final_position)
 // position -> posição no momento
@@ -94,7 +95,10 @@ static void solution_1_recursion(int move_number, int position, int speed, int f
   if (solution_1_best.positions[move_number] > solution_1.positions[move_number])
     return;
   // backtrack
-  // 
+  // if (visited[move_number][position][speed] == 1)
+  //   return;
+
+  visited[move_number][position][speed] = 1;
 
   // no, try all legal speed
   for (new_speed = speed + 1; new_speed >= speed - 1; new_speed--)
@@ -114,6 +118,13 @@ static void solution_1_recursion(int move_number, int position, int speed, int f
 
 static void solve_1(int final_position)
 {
+  // Clear the visited array
+  // for (int i = 0; i < final_position; i++)
+  //   for (int j = 0 ; j < final_position; j++)
+  //     for (int k = 0; k < _max_road_speed_; k++)
+  //       visited[i][j][k] = 0;
+    
+
   if (final_position < 1 || final_position > _max_road_size_)
   {
     fprintf(stderr, "solve_1: bad final_position\n");
@@ -138,14 +149,12 @@ static void solution_2_recursion(int move_number, int position, int speed, int f
 // final_position -> posição final
 {
   int i, new_speed;
-
   // already found one solution?
   if (solution_2_best.n_moves != final_position)
   {
     // return because its the best solution
     return;
   }
-
   // record move -> esforço que faz
   solution_2_count++;
   solution_2.positions[move_number] = position;
@@ -204,9 +213,6 @@ static void solution_3_iterative(int move_number, int position, int speed, int f
     for (new_speed = speed + 1; new_speed >= 1; new_speed--)
     {
       int break_distance = new_speed * (new_speed + 1) / 2;
-
-
-
       if (new_speed >= 1 && new_speed <= _max_road_speed_ && position + break_distance <= final_position)
       {
         // check break distance
