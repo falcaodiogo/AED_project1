@@ -337,14 +337,14 @@ static void example(void)
   init_road_speeds();
   final_position = 30;
   solve_1(final_position);
-  make_custom_pdf_file("example.pdf", final_position, &max_road_speed[0], solution_1_best.n_moves, &solution_1_best.positions[0], solution_1_elapsed_time, solution_1_count, "Plain recursion");
+  make_custom_pdf_file("example.pdf", final_position, &max_road_speed[0], solution_1_best.n_moves, &solution_1_best.positions[0], solution_1_elapsed_time, solution_1_count, "Branch and Bound");
   printf("mad road speeds:");
   for (i = 0; i <= final_position; i++)
     printf(" %d", max_road_speed[i]);
   printf("\n");
   printf("positions:");
   for (i = 0; i <= solution_1_best.n_moves; i++)
-    printf(" %d", solution_1_best.positions[i]);
+    printf(" solution 1 = %d", solution_1_best.positions[i]);
   printf("\n");
 }
 //
@@ -387,8 +387,8 @@ int main(int argc, char *argv[argc + 1])
       solve_1(final_position);
       if (print_this_one != 0)
       {
-        sprintf(file_name, "%03d_1.pdf", final_position);
-        make_custom_pdf_file(file_name, final_position, &max_road_speed[0], solution_1_best.n_moves, &solution_1_best.positions[0], solution_1_elapsed_time, solution_1_count, "Plain recursion");
+        sprintf(file_name, "result_1_%s.pdf", argv[1]);
+        make_custom_pdf_file(file_name, final_position, &max_road_speed[0], solution_1_best.n_moves, &solution_1_best.positions[0], solution_1_elapsed_time, solution_1_count, "Branch and Bound Approach(recursive)");
       }
       printf(" %3d %16lu %9.3e | ", solution_1_best.n_moves, solution_1_count, solution_1_elapsed_time);
     }
@@ -405,7 +405,7 @@ int main(int argc, char *argv[argc + 1])
       solve_2(final_position);
       if (print_this_one != 0)
       {
-        sprintf(file_name, "%03d_2.pdf", final_position);
+        sprintf(file_name, "result_2_%s.pdf", argv[1]);
         make_custom_pdf_file(file_name, final_position, &max_road_speed[0], solution_2_best.n_moves, &solution_2_best.positions[0], solution_2_elapsed_time, solution_2_count, "Plain recursion");
       }
       printf(" %3d %16lu %9.3e | ", solution_2_best.n_moves, solution_2_count, solution_2_elapsed_time);
@@ -423,8 +423,8 @@ int main(int argc, char *argv[argc + 1])
       solve_3(final_position);
       if (print_this_one != 0)
       {
-        sprintf(file_name, "%03d_3.pdf", final_position);
-        make_custom_pdf_file(file_name, final_position, &max_road_speed[0], solution_3_best.n_moves, &solution_3_best.positions[0], solution_3_elapsed_time, solution_3_count, "Plain recursion");
+        sprintf(file_name, "result_3_%s.pdf", argv[1]);
+        make_custom_pdf_file(file_name, final_position, &max_road_speed[0], solution_3_best.n_moves, &solution_3_best.positions[0], solution_3_elapsed_time, solution_3_count, "Iterative Implementation");
       }
       printf(" %3d %16lu %9.3e | ", solution_3_best.n_moves, solution_3_count, solution_3_elapsed_time);
     }
@@ -441,8 +441,8 @@ int main(int argc, char *argv[argc + 1])
       solve_4(final_position);
       if (print_this_one != 0)
       {
-        sprintf(file_name, "%03d_4.pdf", final_position);
-        make_custom_pdf_file(file_name, final_position, &max_road_speed[0], solution_4_best.n_moves, &solution_4_best.positions[0], solution_4_elapsed_time, solution_4_count, "Plain recursion");
+        sprintf(file_name, "result_4_%s.pdf", argv[1]);
+        make_custom_pdf_file(file_name, final_position, &max_road_speed[0], solution_4_best.n_moves, &solution_4_best.positions[0], solution_4_elapsed_time, solution_4_count, "Dynamic Iterative Implementation");
       }
       printf(" %3d %16lu %9.3e | ", solution_4_best.n_moves, solution_4_count, solution_4_elapsed_time);
     }
