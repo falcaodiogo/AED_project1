@@ -1,3 +1,5 @@
+import math
+
 with open("FileOutput") as file:
     file.readline()
     file.readline()
@@ -27,19 +29,43 @@ with open("FileOutput") as file:
 
     print("\nDICT1\n")
     for item, amount in dic1.items():  
-        print(amount, end=" ")
+        print(amount, end = ' ')
 
     print("\nDICT2\n")
     for item, amount in dic2.items():  
-        print(amount, end=" ")
+        print(amount, end = ' ')
 
     print("\nDICT3\n")
     for item, amount in dic3.items():  
-        print(amount, end=" ")
+        print(amount, end = ' ')
 
     print("\nDICT4\n")
     for item, amount in dic4.items():  
-        print(amount, end=" ")
+        print(amount, end = ' ')
+
+    print("\nDICT1\n")
+    for item, amount in dic1.items():  
+        amount = float(amount)
+        amount = math.log(amount)
+        print(amount, end = ' ')
+
+    print("\nDICT2\n")
+    for item, amount in dic2.items():  
+        amount = float(amount)
+        amount = math.log(amount)
+        print(amount, end = ' ')
+
+    print("\nDICT3\n")
+    for item, amount in dic3.items():  
+        amount = float(amount)
+        amount = math.log(amount)
+        print(amount, end = ' ')
+
+    print("\nDICT4\n")
+    for item, amount in dic4.items(): 
+        amount = float(amount)
+        amount = math.log(amount) 
+        print(amount, end = ' ')
 
 ## MATPLOTLIB
 # import matplotlib.pyplot as plt
