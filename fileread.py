@@ -27,19 +27,19 @@ with open("FileOutput") as file:
 
     print("\nDICT1\n")
     for item, amount in dic1.items():  
-        print("{} : {}".format(item, amount))
+        print(amount, end=" ")
 
     print("\nDICT2\n")
     for item, amount in dic2.items():  
-        print("{} : {}".format(item, amount))
+        print(amount, end=" ")
 
     print("\nDICT3\n")
     for item, amount in dic3.items():  
-        print("{} : {}".format(item, amount))
+        print(amount, end=" ")
 
     print("\nDICT4\n")
     for item, amount in dic4.items():  
-        print("{} : {}".format(item, amount))
+        print(amount, end=" ")
 
 ## MATPLOTLIB
 # import matplotlib.pyplot as plt
