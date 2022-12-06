@@ -237,7 +237,7 @@ static void solution_3_iterative(int move_number, int position, int speed, int f
       }
     }
   }
-  solution_3_best = solution_3;
+  solution_3_best = solution_3; // it will always be the best solution
 }
 
 static void solve_3(int final_position)
