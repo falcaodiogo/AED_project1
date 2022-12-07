@@ -43,33 +43,25 @@ with open("FileOutput") as file:
     for item, amount in dic4.items():  
         print(amount, end = ' ')
 
-    print("\nDICT1\n")
-    for item, amount in dic1.items():  
-        amount = float(amount)
-        amount = math.log(amount)
-        print(amount, end = ' ')
 
-    print("\nDICT2\n")
-    for item, amount in dic2.items():  
-        amount = float(amount)
-        amount = math.log(amount)
-        print(amount, end = ' ')
+with open("FileOutup2.txt") as file:
+    file.readline()
+    file.readline()
+    file.readline()
+    file.readline()
+    file.readline()
+    dic5 = {}
+    cont = 1
+    for line in file:
+        lst = line.split("|")
 
-    print("\nDICT3\n")
-    for item, amount in dic3.items():  
-        amount = float(amount)
-        amount = math.log(amount)
-        print(amount, end = ' ')
+    #    n       sol           count   cpu time       n       sol           count   cpu time       n       sol           count   cpu time       n       sol           count   cpu time
+    #['  1 ', '   1                2 3.847e-06 ', '   1 ', '   1                2 8.370e-07 ', '   1 ', '   1                1 3.009e-06 ', '   1 ', '   1                1 8.150e-07 ', ' \n']
 
-    print("\nDICT4\n")
-    for item, amount in dic4.items(): 
-        amount = float(amount)
-        amount = math.log(amount) 
-        print(amount, end = ' ')
+        cpu5 = (lst[1])[-10:]
+        dic5[cont] = cpu5
+        cont += 1
 
-## MATPLOTLIB
-# import matplotlib.pyplot as plt
-# x = data[0]
-# y = data[1]
-# plt.plot(x, y,'r--')
-# plt.show()
+    print("\nDICT5\n")
+    for item, amount in dic5.items():  
+        print(amount, end = ' ')
