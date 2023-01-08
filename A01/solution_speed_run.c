@@ -96,10 +96,10 @@ static void solution_1_recursion(int move_number, int position, int speed, int f
   if (solution_1_best.positions[move_number] > solution_1.positions[move_number])
     return;
   // backtrack
-  // if (visited[move_number][position][speed] == 1)
-  //   return;
+  // if (visited[move_number][position][speed] == 1) // if the position was already visited, return to the previous position and try another speed
+  //  return; 
 
-  // visited[move_number][position][speed] = 1;
+  // visited[move_number][position][speed] = 1; // mark the position as visited
 
   // no, try all legal speed
   for (new_speed = speed + 1; new_speed >= speed - 1; new_speed--)
@@ -237,7 +237,7 @@ static void solution_3_iterative(int move_number, int position, int speed, int f
       }
     }
   }
-  solution_3_best = solution_3; // it will always be the best solution
+  solution_3_best = solution_3;
 }
 
 static void solve_3(int final_position)
